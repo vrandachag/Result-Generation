@@ -74,25 +74,35 @@ def student_subject_details():
 			student_subject = []
 			print("\n\nEnter subjects for " + row[1] + ":")
 			student_subject.append(row[0])
+			student_subject.append(row[1])
 			i = 0
 			display_subject_details()
 			for i in range (0,2):
 				subject_code = input("Enter subject code:")
 				if subject_code not in student_subject:
 					student_subject.append(subject_code)
+					with open("subject_details.csv",'r') as f2:
+						r1 = csv.reader(f2)
+						for row_1 in r1:
+							if row_1[0] == subject_code:
+								student_subject.append()
+								break
+						else:
+							print("subject not found")
 					i = i + 1
 			wt.writerow(student_subject)
 	f.close()
 
 # display student and the subjects enrolled
 def display_student_subject_details():
-	print("scholar number, subject code, marks, subject code, marks")
+	print("scholar number,name, subject code,subject name, marks, subject code,subject name, marks")
 	with open("student_subject_details.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
 			print(row)
 
 #To input marks of student
+#here
 def student_marks():
 	f = open("student_marks.csv", "a")
 	wt = csv.writer(f)
@@ -102,8 +112,9 @@ def student_marks():
 		year = input("Enter year:")
 		for row in r:
 			student_marks = []
-			print("Enter marks for scholar number " + row[0] + ":")
-			student_marks.append(row[0])			
+			print("Enter marks for " + row[1] + ":")
+			student_marks.append(row[0])	
+			student_marks.append(row[1])		
 			student_marks.append(term)
 			student_marks.append(year)
 			for i in range(1,3):
