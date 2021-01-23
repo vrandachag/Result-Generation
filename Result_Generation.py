@@ -11,7 +11,7 @@ def scholar_number_init():
 
 #basic details of student (master file)
 def student_record():
-	f = open("student_record.csv","w")
+	f = open("student_record.csv","a")
 	wt= csv.writer(f)
 	choice = 'Y'
 	global scholar_number
@@ -43,7 +43,7 @@ def display_student_record():
 
 #subject code and subject names
 def subject_details():
-	f = open("subject_details.csv",'w')
+	f = open("subject_details.csv",'a')
 	wt = csv.writer(f)
 	choice = 'Y'
 	while choice.upper() == 'Y':
@@ -66,27 +66,27 @@ def display_subject_details():
 
 #student - subject code
 def student_subject_details():
-	f = open("student_subject_details.csv",'w')
+	f = open("student_subject_details.csv",'a')
 	wt = csv.writer(f)
-	student_subject = []
 	with open("student_record.csv","r") as f1:
 		r= csv.reader(f1)
 		for row in r:
+			student_subject = []
+			print("\n\nEnter subjects for " + row[1] + ":")
 			student_subject.append(row[0])
-			subjects = []
-			while subjects.size() < 5:
-				display_subject_details()
-				subjects = eval(input("Enter list of subject code:"))
-				if subjects.size() != 5:
-					print("Please enter 5 subjects")
-				else:
-					student_subject.append(subjects)
-					wt.writerow(student_subject)
+			i = 0
+			display_subject_details()
+			for i in range (0,2):
+				subject_code = input("Enter subject code:")
+				if subject_code not in student_subject:
+					student_subject.append(subject_code)
+					i = i + 1
+			wt.writerow(student_subject)
 	f.close()
 
 # display student and the subjects enrolled
 def display_student_subject_details():
-	print("scholar number, subject code, marks, subject code, marks, subject code, marks, subject code, marks, subject code, marks")
+	print("scholar number, subject code, marks, subject code, marks")
 	with open("student_subject_details.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
@@ -94,18 +94,19 @@ def display_student_subject_details():
 
 #To input marks of student
 def student_marks():
-	f = open("student_subject_details.csv", "w")
+	f = open("student_marks.csv", "a")
 	wt = csv.writer(f)
-	with open("student_record.csv", 'r') as f1:
+	with open("student_subject_details.csv", 'r') as f1:
 		r = csv.reader(f1)
+		term = input("Enter term:")
+		year = input("Enter year:")
 		for row in r:
 			student_marks = []
-			student_marks.append(row[0])
-			term = input("Enter term:")
+			print("Enter marks for scholar number " + row[0] + ":")
+			student_marks.append(row[0])			
 			student_marks.append(term)
-			year = input("Enter year:")
 			student_marks.append(year)
-			for i in range(0,5):
+			for i in range(1,3):
 				student_marks.append(row[i])
 				marks = input("Enter marks of " + row[i] + ":")
 				student_marks.append(marks)
@@ -114,7 +115,8 @@ def student_marks():
 
 #display student marks
 def display_student_marks():
-	with open("student_subject_details.csv",'r') as f:
+	print("scholar number, term, year, subject code, subject marks, subject code, subject marks")
+	with open("student_marks.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
 			print(row)
@@ -122,21 +124,21 @@ def display_student_marks():
 #to calculate result term-wise
 def Result_calc():
 	print("scholar number, term, year, total marks, percentage")
-	with open("student_subject_details.csv", 'r')as f1:
+	with open("student_marks.csv", 'r')as f1:
 		r = csv.reader(f1)
 		for row in r:
 			avg = 0
 			percentage = 0
 			i=4
-			while i<13:
+			while i<8:
 				avg = avg + int(row[i])
 				i = i + 2
-			percentage = avg * 20
-			print(row[0] + row[1] + row[2] + (avg) + (percentage))
+			percentage = avg * 0.5
+			print(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(avg) + " " + str(percentage))
 
 while 1:
-	scholar_number_init
-	print('\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students ')
+	scholar_number_init()
+	print('\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students \n6. Display subjects enrolled by the student \n7. To input marks of student \n8. Display Student marks \n9. Display result of the students')
 	choice = int(input("Enter choice:"))
 	if choice == 1:
 		student_record()
@@ -148,8 +150,14 @@ while 1:
 		display_subject_details()
 	elif choice == 5:
 		student_subject_details()
+	elif choice == 6:
+		display_student_subject_details()
+	elif choice == 7:
+		student_marks()
+	elif choice == 8:
+		display_student_marks()
 	else:
-		Modify()
+		Result_calc()
 	val = input("Want to enter more?(Y or N):")
 	if val.upper() == 'N':
 		break
