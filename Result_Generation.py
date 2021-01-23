@@ -92,6 +92,7 @@ def display_student_subject_details():
 		for row in r:
 			print(row)
 
+#To input marks of student
 def student_marks():
 	f = open("student_subject_details.csv", "w")
 	wt = csv.writer(f)
@@ -111,26 +112,44 @@ def student_marks():
 			wt.writerow(student_marks)
 	f.close()
 
+#display student marks
+def display_student_marks():
+	with open("student_subject_details.csv",'r') as f:
+		r = csv.reader(f)
+		for row in r:
+			print(row)
+
 #to calculate result term-wise
 def Result_calc():
-	f = open("student_result.csv", 'w')
-	wt = csv.writer(f)
+	print("scholar number, term, year, total marks, percentage")
 	with open("student_subject_details.csv", 'r')as f1:
 		r = csv.reader(f1)
 		for row in r:
-			result = []
-			result.append(row[0])
-			result.append(row[1])
-			result.append(row[2])
 			avg = 0
+			percentage = 0
 			i=4
 			while i<13:
 				avg = avg + int(row[i])
 				i = i + 2
-			avg = avg/5
-			result.append(avg)
-		wt.writerow(result)
-	f.close()
+			percentage = avg * 20
+			print(row[0] + row[1] + row[2] + (avg) + (percentage))
 
 while 1:
-	print('\n')
+	scholar_number_init
+	print('\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students ')
+	choice = int(input("Enter choice:"))
+	if choice == 1:
+		student_record()
+	elif choice == 2:
+		display_student_record()
+	elif choice == 3:
+		subject_details()
+	elif choice == 4:
+		display_subject_details()
+	elif choice == 5:
+		student_subject_details()
+	else:
+		Modify()
+	val = input("Want to enter more?(Y or N):")
+	if val.upper() == 'N':
+		break
