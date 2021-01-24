@@ -91,7 +91,7 @@ def student_subject_details():
 						r1 = csv.reader(f2)
 						for row_1 in r1:
 							if row_1[0] == subject_code:
-								student_subject.append()
+								student_subject.append(row_1[1])
 								break
 						else:
 							print("subject not found")
@@ -113,7 +113,6 @@ def display_student_subject_details():
 			print("Subject name:" + row[5])
 
 #To input marks of student
-#here
 def student_marks():
 	f = open("student_marks.csv", "a")
 	wt = csv.writer(f)
@@ -128,35 +127,48 @@ def student_marks():
 			student_marks.append(row[1])		
 			student_marks.append(term)
 			student_marks.append(year)
-			for i in range(1,3):
-				student_marks.append(row[i])
-				marks = input("Enter marks of " + row[i] + ":")
-				student_marks.append(marks)
+			for i in range(2,6):
+				if i%2 == 0:
+					student_marks.append(row[i])
+					student_marks.append(row[i+1])
+					marks = input("Enter marks of " + row[i+1] + ":")
+					student_marks.append(marks)
+					i = i + 2
 			wt.writerow(student_marks)
 	f.close()
 
 #display student marks
 def display_student_marks():
-	print("scholar number, term, year, subject code, subject marks, subject code, subject marks")
 	with open("student_marks.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
-			print(row)
+			print("\n")
+			print("scholar number:" + row[0])
+			print("name:" + row[1])
+			print("subject:" + row[5] + "\tmarks:" + row[6])
+			print("subject:" + row[8] + "\tmarks:" + row[9])
 
 #to calculate result term-wise
 def Result_calc():
-	print("scholar number, term, year, total marks, percentage")
+	#max marks grade
+	#1,Vranda,2,2,CS3CO10,TOC,88,CS3CO28,DC,90
 	with open("student_marks.csv", 'r')as f1:
 		r = csv.reader(f1)
+		print("term:" + r[2])
+		print("Year:" + r[3])
 		for row in r:
+			print("\nScholar number:" + row[0])
+			print("Name:" + row[1])
 			avg = 0
 			percentage = 0
-			i=4
-			while i<8:
-				avg = avg + int(row[i])
-				i = i + 2
-			percentage = avg * 0.5
-			print(str(row[0]) + " " + str(row[1]) + " " + str(row[2]) + " " + str(avg) + " " + str(percentage))
+			i=5
+			while i<10:
+				print("Marks in " + row[i] + " is:" + row[i+1])
+				avg = avg + int(row[i+1])
+				i = i + 3
+			percentage = avg * 0.5			
+			print("Total Marks:" + str(avg))
+			print("Total percentage:" + str(percentage))
 
 while 1:
 	scholar_number_init()
@@ -183,3 +195,5 @@ while 1:
 	val = input("Want to enter more?(Y or N):")
 	if val.upper() == 'N':
 		break
+
+	'''Analysis
