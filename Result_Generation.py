@@ -35,11 +35,16 @@ def student_record():
 
 #display student details
 def display_student_record():
-	print("scholar number, name, father's name, mother's name, address, mobile number")
 	with open("student_record.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
-			print(row)
+			print("\n")
+			print("Scholar number:" + row[0])
+			print("Name:"+ row[1])
+			print("Father's name:" + row[2])
+			print("Mother's name:" + row[3])
+			print("Address:" + row[4])
+			print("Mobile number:" + row[5])
 
 #subject code and subject names
 def subject_details():
@@ -58,11 +63,12 @@ def subject_details():
 
 # display subject code and corresponding subject
 def display_subject_details():
-	print("subject code " + " subject")
 	with open("subject_details.csv", "r") as f:
 		r = csv.reader(f)
 		for row in r:
-			print(row)
+			print("\n")
+			print("subject code:" + row[0])
+			print("subject name:" + row[1])
 
 #student - subject code
 def student_subject_details():
@@ -72,7 +78,7 @@ def student_subject_details():
 		r= csv.reader(f1)
 		for row in r:
 			student_subject = []
-			print("\n\nEnter subjects for " + row[1] + ":")
+			print("\nEnter subjects for " + row[1] + ":")
 			student_subject.append(row[0])
 			student_subject.append(row[1])
 			i = 0
@@ -95,11 +101,16 @@ def student_subject_details():
 
 # display student and the subjects enrolled
 def display_student_subject_details():
-	print("scholar number,name, subject code,subject name, marks, subject code,subject name, marks")
 	with open("student_subject_details.csv",'r') as f:
 		r = csv.reader(f)
 		for row in r:
-			print(row)
+			print("\n")
+			print("scholar number" + row[0])
+			print("Name:" + row[1])
+			print("Subject Code:" + row[2])
+			print("Subject name:" + row[3])
+			print("Subject Code:" + row[4])
+			print("Subject name:" + row[5])
 
 #To input marks of student
 #here
@@ -112,7 +123,7 @@ def student_marks():
 		year = input("Enter year:")
 		for row in r:
 			student_marks = []
-			print("Enter marks for " + row[1] + ":")
+			print("\nEnter marks for " + row[1] + ":")
 			student_marks.append(row[0])	
 			student_marks.append(row[1])		
 			student_marks.append(term)
