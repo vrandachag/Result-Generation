@@ -23,38 +23,72 @@ def student_record():
                 student = []
                 student.append(scholar_number + 1)
                 scholar_number = scholar_number + 1
-                tkinter.Label(window,
-                              text = "Enter name:",
-                              font = "Georgia").grid(padx = 0, pady = 0)
-                name = Entry(window).grid(row = 0,column = 1)
+                Label(window,
+                      text = "Enter name:",
+                      font = "Georgia",
+                      justify = LEFT).grid(padx = 0, pady = 0)
+                name = StringVar()
+                Entry(window,
+                      textvariable = name,
+                      font = "Georgia",
+                      bg = "blue").grid(padx = 0, pady = 1, row = 1,column = 0)
                 student.append(name)
                 
-                tkinter.Label(window,
-                              text = "Enter Father's name:",
-                              font = "Georgia").grid(padx = 1, pady = 0)
-                father_name = Entry(window).grid(row = 1,column = 1)
+                Label(window,
+                      text = "Enter Father's name:",
+                      font = "Georgia",
+                      justify = LEFT).grid(padx = 0, pady = 1)
+                father_name = StringVar()
+                Entry(window,
+                      textvariable = father_name,
+                      font = ("Georgia"),
+                      bg = "white").grid(padx = 0, pady = 1,row = 1,column = 1)
                 student.append(father_name)
                 
-                tkinter.Label(window,
-                              text = "Enter Mother's name:",
-                              font = "Georgia").grid(padx = 2, pady = 0)
-                mother_name = Entry(window).grid(row = 2,column = 1)
+                Label(window,
+                      text = "Enter Mother's name:",
+                      font = "Georgia",
+                      justify = LEFT).grid(padx = 0, pady = 2)
+                mother_name = StringVar()
+                Entry(window,
+                      textvariable = mother_name,
+                      font = ("Georgia"),
+                      bg = "white").grid(padx = 0, pady = 2,row = 2,column = 1)
                 student.append(mother_name)
                 
-                tkinter.Label(window,
-                              text = "Enter address:",
-                              font = "Georgia").grid( padx = 3, pady = 0)
-                address = Entry(window).grid(row = 3,column = 1)
+                Label(window,
+                      text = "Enter address:",
+                      font = "Georgia",
+                      justify = LEFT).grid( padx = 0, pady = 3)
+                address = StringVar()
+                Entry(window,
+                      textvariable = address,
+                      font = ("Georgia"),
+                      bg = "white").grid(padx = 0, pady = 3,row = 3,column = 1)
                 student.append(address)
                 
-                tkinter.Label(window,
-                              text = "Enter Mobile Number:",
-                              font = "Georgia").grid( padx = 4, pady = 0)
-                mobile_number = Entry(window).grid(row = 4,column = 1)
+                Label(window,
+                      text = "Enter Mobile Number:",
+                      font = "Georgia",
+                      justify = LEFT).grid( padx = 0, pady = 4)
+                mobile_number = IntVar()
+                Entry(window,
+                      textvariable = mobile_number,
+                      font = ("Georgia"),
+                      bg = "white").grid(padx = 0, pady = 4,row = 4,column = 1)
                 student.append(mobile_number)
                 
                 wt.writerow(student)
-                choice = input("Want to enter more entries?(Y/N):")
+                Label(window,
+                      text = "Want to enter more entries?(Y/N):",
+                      font = ("Georgia"),
+                      justify = LEFT).grid(padx = 0,pady = 5,row = 5,column = 0) 
+                Button(window,
+                       text = 'Yes', 
+                       command = student_record).grid(padx = 0,pady = 1,row = 1,column = 1)
+                Button(window,
+                       text = 'No',
+                       command = main).grid(padx = 0,pady = 1,row = 1,column = 2)
         f.close()
 
 #display student details
@@ -96,6 +130,7 @@ def display_subject_details():
 
 #student - subject code
 def student_subject_details():
+        window = Tk()
         f = open("student_subject_details.csv",'a')
         wt = csv.writer(f)
         with open("student_record.csv","r") as f1:
@@ -194,32 +229,48 @@ def Result_calc():
                         print("Total Marks:" + str(avg))
                         print("Total percentage:" + str(percentage))
 
-window1 = Tk()
-window1.title("Result-Main Menu")
-while 1:
-        scholar_number_init()
-        Label(window1,
-                      text = '\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students \n6. Display subjects enrolled by the student \n7. To input marks of student \n8. Display Student marks \n9. Display result of the students',
-                      font = 'Georgia').grid(pady = 5,padx = 5)
-        choice = int(input("Enter choice:"))
-        if choice == 1:
+def Submit():
+        choice_1 = choice.get()
+        if choice_1 == 1:
                 student_record()
-        elif choice == 2:
+        elif choice_1 == 2:
                 display_student_record()
-        elif choice == 3:
+        elif choice_1 == 3:
                 subject_details()
-        elif choice == 4:
+        elif choice_1 == 4:
                 display_subject_details()
-        elif choice == 5:
+        elif choice_1 == 5:
                 student_subject_details()
-        elif choice == 6:
+        elif choice_1 == 6:
                 display_student_subject_details()
-        elif choice == 7:
+        elif choice_1 == 7:
                 student_marks()
-        elif choice == 8:
+        elif choice_1 == 8:
                 display_student_marks()
         else:
                 Result_calc()
-        val = input("Want to enter more?(Y or N):")
-        if val.upper() == 'N':
-                break
+        Label(window1,
+              text = '\nWant to enter more?(Y or N):',
+              font = 'Georgia').grid(padx = 1,pady = 0)
+        val = Entry(window1).grid(padx = 1,pady = 1)
+#        if val.upper() == 'N':
+
+def main():
+        window1 = Tk()
+        window1.title("Result-Main Menu")
+        scholar_number_init()
+        Label(window1,
+              text = '\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students \n6. Display subjects enrolled by the student \n7. To input marks of student \n8. Display Student marks \n9. Display result of the students',
+              font = 'Georgia',
+              justify = LEFT).grid(padx = 0)
+        choice = IntVar()
+        c1 = Entry(window1,
+                   textvariable = choice,
+                   font = ("Georgia"),
+                   fg = "blue",
+                   bg = "white").grid(padx = 1, pady = 0, row = 1, column = 0)
+        sub_btn = Button(window1,
+                         text = 'Submit', 
+                         command = Submit).grid(padx = 0,pady = 1,row = 1,column = 1)
+
+main()
