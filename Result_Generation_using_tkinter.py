@@ -229,7 +229,7 @@ def Result_calc():
                         print("Total Marks:" + str(avg))
                         print("Total percentage:" + str(percentage))
 
-def Submit():
+def Submit(choice):
         choice_1 = choice.get()
         if choice_1 == 1:
                 student_record()
@@ -271,6 +271,9 @@ def main():
                    bg = "white").grid(padx = 1, pady = 0, row = 1, column = 0)
         sub_btn = Button(window1,
                          text = 'Submit', 
-                         command = Submit).grid(padx = 0,pady = 1,row = 1,column = 1)
+                         command = Submit(choice),
+                         fg = "white",
+                         background = "red",
+                         font = ("Georgia")).grid(padx = 0,pady = 1,row = 2,column = 2)
 
 main()
