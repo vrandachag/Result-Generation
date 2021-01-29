@@ -122,7 +122,7 @@ def display_student_record():
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
-
+        i = 1
         with open("student_record.csv",'r') as f:
                 r = csv.reader(f)
                 myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
@@ -131,50 +131,58 @@ def display_student_record():
                         print(myTable)
                         Label(window,
                               text = myTable,
-                              font = "Georgia").grid(row = 0,column = 1)
+                              font = "Georgia").grid(row = 0,column = i)
+                        i = i + 1
 
 #subject code and subject names
 def subject_details():
-        window1.withdraw()
+   #     window1.withdraw()
         window = Tk()
         window.title("Subject Details")
         f = open("subject_details.csv",'a')
         wt = csv.writer(f)
         subject = []
-        Label(window,
-              text = "Enter subject code:",
-              font = "Georgia",
-              bg = "white").grid(row = 0,column = 0)
+        sc = Label(window,
+                   text = "Enter subject code:",
+                   font = "Georgia",
+                   bg = "white")
+        sc.grid(row = 0,column = 0)
         subject_code = StringVar()
-        Entry(window1,
-              textvariable = subject_code,
-              font = "Georgia",
-              bg = "white").grid(row = 0,column = 1)
+        sc_e = Entry(window1,
+                     textvariable = subject_code,
+                     font = "Georgia",
+                     bg = "white")
+        sc_e.grid(row = 0,column = 1)
         subject.append(subject_code)
         
-        Label(window,
-              text = "Enter subject name:",
-              font = "Georgia",
-              bg = "white").grid(row = 1,column = 0)
+        sn = Label(window,
+                   text = "Enter subject name:",
+                   font = "Georgia",
+                   bg = "white")
+        sn.grid(row = 1,column = 0)
         subject_name = StringVar()
-        Entry(window1,
-              textvariable = subject_name,
-              font = "Georgia",
-              bg = "white").grid(row = 1,column = 1)
+        sn_e = Entry(window1,
+                     textvariable = subject_name,
+                     font = "Georgia",
+                     bg = "white")
+        sn_e.grid(row = 1,column = 1)
         subject.append(subject_name)
 
         wt.writerow(subject)
 
-        Label(window,
-                      text = "Want to enter more entries?(Y/N):",
-                      font = ("Georgia"),
-                      justify = LEFT).grid(padx = 0,pady = 5,row = 2,column = 0) 
-        Button(window,
-               text = 'Yes', 
-               command = subject_details).grid(padx = 0,pady = 1,row = 3,column = 0)
-        Button(window,
-               text = 'No',
-               command = main).grid(padx = 0,pady = 1,row = 3,column = 1)
+        choose.Label(window,
+                     text = "Want to enter more entries?(Y/N):",
+                     font = ("Georgia"),
+                     justify = LEFT)
+        choose.grid(padx = 0,pady = 5,row = 2,column = 0) 
+        yes_btn = Button(window,
+                         text = 'Yes', 
+                         command = subject_details)
+        yes_btn.grid(padx = 0,pady = 1,row = 2,column = 1)
+        no_btn = Button(window,
+                        text = 'No',
+                        command = main)
+        no_btn.grid(padx = 0,pady = 1,row = 2,column = 2)
         window.destroy()
 
         f.close()
@@ -184,14 +192,25 @@ def display_subject_details():
         window1.withdraw()
         window = Tk()
         window.title("Student Record")
+        window.geometry("1000x600")
+        i = 1
         with open("subject_details.csv",'r') as f:
                 r = csv.reader(f)
                 myTable = PrettyTable(["Subject Code","Subject Name"])
                 for row in r:
                         myTable.add_row([row[0],row[1]])
+                        Label(window,
+                              text = myTable,
+                              font = "Georgia").grid(row = 0,column = i)
+                        i = i + 1
 ##here
+def onclick():
+    global click
+    c1 = click.get()
+    
 #student - subject code
 def student_subject_details():
+    #scholar number, name,subject_code,name
         window = Tk()
         f = open("student_subject_details.csv",'a')
         wt = csv.writer(f)
@@ -199,11 +218,26 @@ def student_subject_details():
                 r= csv.reader(f1)
                 for row in r:
                         student_subject = []
-                        print("\nEnter subjects for " + row[1] + ":")
+                        detail.Label(window,
+                                     text = "\nEnter subjects for " + row[1] + ":",
+                                     font = "Georgia")
+                        detail.grid(row = 0,column = 0)
                         student_subject.append(row[0])
                         student_subject.append(row[1])
+                        global click
+                        click = IntVar()
+                        with open("subject_details.csv","r") as f2:
+                            r1 = csv.reader(f2)
+                            i = 0
+                            for row1 in r1:
+                                Checkbutton(window,
+                                            text = row1[1]
+                                            variable = click
+                                            command = onclick).grid(row=i,column=0)
+                                i = i + 1
+                                            
+'''
                         i = 0
-                        display_subject_details()
                         for i in range (0,2):
                                 subject_code = input("Enter subject code:")
                                 if subject_code not in student_subject:
@@ -217,57 +251,106 @@ def student_subject_details():
                                                 else:
                                                         print("subject not found")
                                         i = i + 1
-                        wt.writerow(student_subject)
+                        wt.writerow(student_subject)'''
         f.close()
 
 # display student and the subjects enrolled
 def display_student_subject_details():
-        with open("student_subject_details.csv",'r') as f:
-                r = csv.reader(f)
-                for row in r:
-                        print("\n")
-                        print("scholar number" + row[0])
-                        print("Name:" + row[1])
-                        print("Subject Code:" + row[2])
-                        print("Subject name:" + row[3])
-                        print("Subject Code:" + row[4])
-                        print("Subject name:" + row[5])
+    window = Tk()
+    window.title("Student-Subject Details")
+    window.geometry("1000x600")
+    with open("student_subject_details.csv",'r') as f:
+        r = csv.reader(f)
+        myTable = PrettryTable(["scholar number","Name:","Subject Code:","Subject name:","Subject Code:","Subject name:"])
+        i = 0
+        for row in r:
+            myTable.add_row([row[0], row[1],row[2],row[3], row[4],row[5]])
+            Label(window,
+                  text = myTable,
+                  font = "Georgia").grid(row = i,column = 0)
+            i = i + 1
+            
 
 #To input marks of student
 def student_marks():
-        f = open("student_marks.csv", "a")
-        wt = csv.writer(f)
-        with open("student_subject_details.csv", 'r') as f1:
-                r = csv.reader(f1)
-                term = input("Enter term:")
-                year = input("Enter year:")
-                for row in r:
-                        student_marks = []
-                        print("\nEnter marks for " + row[1] + ":")
-                        student_marks.append(row[0])    
-                        student_marks.append(row[1])            
-                        student_marks.append(term)
-                        student_marks.append(year)
-                        for i in range(2,6):
-                                if i%2 == 0:
-                                        student_marks.append(row[i])
-                                        student_marks.append(row[i+1])
-                                        marks = input("Enter marks of " + row[i+1] + ":")
-                                        student_marks.append(marks)
-                                        i = i + 2
-                        wt.writerow(student_marks)
+    window = Tk()
+    window.title("Student Marks")
+    window.geometry("1000x60")
+    f = open("student_marks.csv", "a")
+    wt = csv.writer(f)
+    with open("student_subject_details.csv", 'r') as f1:
+        r = csv.reader(f1)
+        t1 = Label(window,
+                   text = "Enter term:",
+                   font = "Georgia"
+                   bg = "white")
+        t1.grid(row = 0,column = 0)
+        term = IntVar()
+        t1_e = Entry(window,
+                     textvariable = term,
+                     font = "Georgia",
+                     bg = "white")
+        t1_e.grid(row = 0,column = 1)
+
+        y1 = Label(window,
+                   text = "Enter year:",
+                   font = "Georgia",
+                   bg = "white")
+        y1.grid(row = 1,column = 0)
+        year = IntVar()
+        y1_e = Entry(window,
+                     textvariable = year,
+                     font = "Georgia",
+                     bg = "white")
+        y1_e.grid(row= 1,column = 1)
+        i = 2
+        for row in r:
+            student_marks = []
+            r2 = Label(window,
+                       text = "Enter marks for " + row[1] + ":",
+                       font = "Georgia",
+                       bg = "white")
+            r2.grid(row = i,column = 0)
+            i = i + 1
+            student_marks.append(row[0])    
+            student_marks.append(row[1])            
+            student_marks.append(term)
+            student_marks.append(year)
+            j = 2
+            for j in range(2,6):
+                if j%2 == 0:
+                    student_marks.append(row[j])
+                    student_marks.append(row[j+1])
+                    m1 = Label(window,
+                               text = ("Enter marks of " + row[j+1] + ":"),
+                               font = "Georgia",
+                               bg = "white")
+                    m1.grid(row = i,column = 0)
+                    marks = IntVar()
+                    m1_e = Entry(window,
+                                 textvariable = marks,
+                                 font = "Georia",
+                                 bg = "white")
+                    m1_e.grid(row = i , column = 1)
+                    i = i + 1
+                    student_marks.append(marks)
+                    j = j + 2
+            wt.writerow(student_marks)
         f.close()
 
 #display student marks
 def display_student_marks():
-        with open("student_marks.csv",'r') as f:
-                r = csv.reader(f)
-                for row in r:
-                        print("\n")
-                        print("scholar number:" + row[0])
-                        print("name:" + row[1])
-                        print("subject:" + row[5] + "\tmarks:" + row[6])
-                        print("subject:" + row[8] + "\tmarks:" + row[9])
+    window = Tk()
+    window.Title("Student Marks")
+    window.geometry("1000x600")
+    with open("student_marks.csv",'r') as f:
+        r = csv.reader(f)
+        myTable = PrettyTable(["scholar number","name","subject","marks","subject","marks"])
+        for row in r:
+            myTable.add_row([row[0],row[1],row[5], row[6], row[8],row[9]])
+        Label(window,
+              text = myTable,
+              font = "Georgia").grid(row= 0,column = 0)
 
 #to calculate result term-wise
 def Result_calc():
@@ -293,8 +376,8 @@ def Result_calc():
 
 def Submit():
         global choice
-   #     choice_1 = choice.get()
-        choice_1 = 1
+        choice_1 = choice.get()
+   #     choice_1 = 1
         
         if choice_1 == 1:
                 student_record()
@@ -344,5 +427,3 @@ def main_menu():
 scholar_number_init()
 main_menu()
 choice = IntVar()
-        
-        
