@@ -7,14 +7,17 @@ scholar_number = 0
 #read complete file and then initialize
 def scholar_number_init():
         global scholar_number
+        scholar_number = 0
         with open("student_record.csv","r") as f:
                 r= csv.reader(f)
                 for row in r:
                         scholar_number = scholar_number + 1
+        if(scholar_number == 0):
+                print("File is empty")
 
 #basic details of student (master file)
 def student_record():
-        window1.withdraw()
+      #  window1.withdraw()
         window = Tk()
         window.geometry("1000x600")
 
@@ -27,73 +30,89 @@ def student_record():
                 student = []
                 student.append(scholar_number + 1)
                 scholar_number = scholar_number + 1
-                Label(window,
-                      text = "Enter name:",
-                      font = "Georgia",
-                      justify = LEFT).grid(padx = 0, pady = 0)
+                n1 = Label(window,
+                           text = "Enter name:",
+                           font = "Georgia",
+                           justify = LEFT)
+                n1.grid(row = 0,column = 0)
                 name = StringVar()
-                Entry(window,
-                      textvariable = name,
-                      font = "Georgia",
-                      bg = "white").grid(padx = 0, pady = 1, row = 1,column = 0)
-                student.append(name)
+                n1_e = Entry(window,
+                             textvariable = name,
+                             font = "Georgia",
+                             bg = "white")
+                n1_e.grid(padx = 0, pady = 0, row = 0,column = 1)
+                student.append(name.get())
                 
-                Label(window,
-                      text = "Enter Father's name:",
-                      font = "Georgia",
-                      justify = LEFT).grid(padx = 0, pady = 1)
+                f1 = Label(window,
+                           text = "Enter Father's name:",
+                           font = "Georgia",
+                           justify = LEFT)
+                f1.grid(padx = 0, pady = 1,row = 1,column = 0)
                 father_name = StringVar()
-                Entry(window,
-                      textvariable = father_name,
-                      font = ("Georgia"),
-                      bg = "white").grid(padx = 0, pady = 1,row = 1,column = 1)
-                student.append(father_name)
+                f1_e = Entry(window,
+                             textvariable = father_name,
+                             font = ("Georgia"),
+                             bg = "white")
+                f1_e.grid(padx = 0, pady = 1,row = 1,column = 1)
+                student.append(father_name.get())
                 
-                Label(window,
-                      text = "Enter Mother's name:",
-                      font = "Georgia",
-                      justify = LEFT).grid(padx = 0, pady = 2)
+                m1 = Label(window,
+                           text = "Enter Mother's name:",
+                           font = "Georgia",
+                           justify = LEFT)
+                m1.grid(padx = 0, pady = 2,row = 2,column = 0)
                 mother_name = StringVar()
-                Entry(window,
-                      textvariable = mother_name,
-                      font = ("Georgia"),
-                      bg = "white").grid(padx = 0, pady = 2,row = 2,column = 1)
-                student.append(mother_name)
+                m1_e = Entry(window,
+                             textvariable = mother_name,
+                             font = ("Georgia"),
+                             bg = "white")
+                m1_e.grid(padx = 0, pady = 2,row = 2,column = 1)
+                student.append(mother_name.get())
                 
-                Label(window,
-                      text = "Enter address:",
-                      font = "Georgia",
-                      justify = LEFT).grid( padx = 0, pady = 3)
+                a1 = Label(window,
+                           text = "Enter address:",
+                           font = "Georgia",
+                           justify = LEFT)
+                a1.grid( padx = 0, pady = 3,row = 3,column = 0)
                 address = StringVar()
-                Entry(window,
-                      textvariable = address,
-                      font = ("Georgia"),
-                      bg = "white").grid(padx = 0, pady = 3,row = 3,column = 1)
-                student.append(address)
+                a1_e = Entry(window,
+                             textvariable = address,
+                             font = ("Georgia"),
+                             bg = "white")
+                a1_e.grid(padx = 0, pady = 3,row = 3,column = 1)
+                student.append(address.get())
                 
-                Label(window,
-                      text = "Enter Mobile Number:",
-                      font = "Georgia",
-                      justify = LEFT).grid( padx = 0, pady = 4)
+                mn = Label(window,
+                           text = "Enter Mobile Number:",
+                           font = "Georgia",
+                           justify = LEFT)
+                mn.grid( padx = 0, pady = 4,row = 4,column = 0)
                 mobile_number = IntVar()
-                Entry(window,
-                      textvariable = mobile_number,
-                      font = ("Georgia"),
-                      bg = "white").grid(padx = 0, pady = 4,row = 4,column = 1)
-                student.append(mobile_number)
+                mn_e = Entry(window,
+                             textvariable = mobile_number,
+                             font = ("Georgia"),
+                             bg = "white")
+                mn_e.grid(padx = 0, pady = 4,row = 4,column = 1)
+                student.append(mobile_number.get())
                 
                 wt.writerow(student)
 
-                Label(window,
-                      text = "Want to enter more entries?(Y/N):",
-                      font = ("Georgia"),
-                      justify = LEFT).grid(padx = 0,pady = 5,row = 5,column = 0) 
-                Button(window,
-                       text = 'Yes', 
-                       command = student_record).grid(padx = 0,pady = 1,row = 5,column = 5)
-                Button(window,
-                       text = 'No',
-                       command = main).grid(padx = 0,pady = 1,row = 5,column = 6)
+                option = Label(window,
+                               text = "Want to enter more entries?",
+                               font = ("Georgia"),
+                               justify = LEFT)
+                option.grid(padx = 0,pady = 5,row = 6,column = 0)
+                
+                yes_btn = Button(window,
+                                 text = 'Yes', 
+                                 command = student_record)
+                yes_btn.grid(padx = 0,pady = 5,row = 6,column = 1)
+                
+                no_btn = Button(window,
+                                text = 'No',
+                                command = main_menu)
+                no_btn.grid(padx = 0,pady = 5,row = 6,column = 3)
+
         window.destroy()
         f.close()
 
@@ -105,10 +124,11 @@ def display_student_record():
         window.geometry("1000x600")
 
         with open("student_record.csv",'r') as f:
-#                r = csv.reader(f)
+                r = csv.reader(f)
                 myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
                 for row in r:
- #                       myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
+                        myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
+                        print(myTable)
                         Label(window,
                               text = myTable,
                               font = "Georgia").grid(row = 0,column = 1)
@@ -272,9 +292,9 @@ def Result_calc():
                         print("Total percentage:" + str(percentage))
 
 def Submit():
-#        global choice
-        choice_1 = 2
-        #choice.get()
+        global choice
+   #     choice_1 = choice.get()
+        choice_1 = 1
         
         if choice_1 == 1:
                 student_record()
@@ -303,18 +323,19 @@ def main_menu():
               text = '\n1. Add Student Details \n2. Display Student Details \n3. Add Subject Details \n4. Display Subject Details \n5. Assign subjects for the students \n6. Display subjects enrolled by the student \n7. To input marks of student \n8. Display Student marks \n9. Display result of the students',
               font = 'Georgia',
               justify = LEFT).grid(padx = 0,row = 0,column = 0)
+        global choice
         choice = IntVar()
         c1 = choice.get()
         Entry(window1,
               textvariable = choice,
               font = ("Georgia"),
-              fg = "blue",
+              fg = "Black",
               bg = "white").grid(padx = 1, pady = 0, row = 1, column = 0)
         sub_btn = Button(window1,
                          text = 'Submit', 
                          command = Submit,
-                         fg = "sky blue",
-                         background = "red",
+                         fg = "Black",
+                         background = "white",
                          font = ("Georgia"))
         sub_btn.grid(padx = 0,pady = 1,row = 2,column = 0)
 
@@ -322,5 +343,6 @@ def main_menu():
         
 scholar_number_init()
 main_menu()
+choice = IntVar()
         
         
