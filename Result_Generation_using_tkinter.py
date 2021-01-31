@@ -131,25 +131,23 @@ def display_student_record():
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
-        i = 1
+        myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
         with open("student_record.csv",'r') as f:
                 r = csv.reader(f)
-                myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
-                for row in r:
-                        myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
-                        print(myTable)
-                        Label(window,
-                              text = myTable,
-                              font = "Georgia").grid(row = 0,column = i)
-                        i = i + 1
-
+                #for row in r:
+                 #       myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
+                print(myTable)
+                Label(window,
+                      text = myTable,
+                      font = "Georgia").grid(row = 0,column = 0)
+                
 #subject code and subject names
 def subject_details():
    #     window1.withdraw()
         window = Tk()
         window.title("Subject Details")
-        f = open("subject_details.csv",'a')
-        wt = csv.writer(f)
+      #  f = open("subject_details.csv",'a')
+       # wt = csv.writer(f)
         subject = []
         sc = Label(window,
                    text = "Enter subject code:",
@@ -177,24 +175,32 @@ def subject_details():
         sn_e.grid(row = 1,column = 1)
         subject.append(subject_name)
 
-        wt.writerow(subject)
+        #wt.writerow(subject)
+
+        sub_btn = Button(window,
+                         text = 'Submit', 
+                         command = lambda:append_file(subject,"subject_details.csv"),
+                         fg = "Black",
+                         background = "white",
+                         font = ("Georgia"))
+        sub_btn.grid(row = 3,column = 0)
 
         choose.Label(window,
                      text = "Want to enter more entries?(Y/N):",
                      font = ("Georgia"),
                      justify = LEFT)
-        choose.grid(padx = 0,pady = 5,row = 2,column = 0) 
+        choose.grid(padx = 0,pady = 5,row = 4,column = 0) 
         yes_btn = Button(window,
                          text = 'Yes', 
                          command = subject_details)
-        yes_btn.grid(padx = 0,pady = 1,row = 2,column = 1)
+        yes_btn.grid(padx = 0,pady = 1,row = 4,column = 1)
         no_btn = Button(window,
                         text = 'No',
                         command = main)
-        no_btn.grid(padx = 0,pady = 1,row = 2,column = 2)
+        no_btn.grid(padx = 0,pady = 1,row = 4,column = 2)
         window.destroy()
 
-        f.close()
+#        f.close()
 
 # display subject code and corresponding subject
 def display_subject_details():
@@ -202,16 +208,17 @@ def display_subject_details():
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
-        i = 1
+#        i = 1
+        myTable = PrettyTable(["Subject Code","Subject Name"])
+
         with open("subject_details.csv",'r') as f:
                 r = csv.reader(f)
-                myTable = PrettyTable(["Subject Code","Subject Name"])
                 for row in r:
                         myTable.add_row([row[0],row[1]])
-                        Label(window,
-                              text = myTable,
-                              font = "Georgia").grid(row = 0,column = i)
-                        i = i + 1
+                Label(window,
+                      text = myTable,
+                      font = "Georgia").grid(row = 0,column = i)
+ #                       i = i + 1
 ##here
 def onclick():
     global click
@@ -421,3 +428,5 @@ def main_menu():
 scholar_number_init()
 print(scholar_number)
 main_menu()
+        
+        
