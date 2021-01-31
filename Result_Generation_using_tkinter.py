@@ -421,5 +421,3 @@ def main_menu():
 scholar_number_init()
 print(scholar_number)
 main_menu()
-        
-        
