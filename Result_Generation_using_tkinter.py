@@ -16,24 +16,33 @@ def scholar_number_init():
                 print("File is empty")'''
 
 #to append data in file
-def append_file(list_name,file_name):
+def submit_student_record(scholar_no,name,fathers_name,mothers_name,address,mobile_number,file_name):
+        
+        mno = mobile_number.get()
         print("Append to file")
         print(file_name)
-        print(list_name)
+        student = []
+        student.append(scholar_no)
+        student.append(name.get())
+        student.append(fathers_name.get())
+        student.append(mothers_name.get())
+        student.append(address.get())
+        student.append(mno)
+        print(student)
         f = open(file_name,"a")
         wt = csv.writer(f)
-        wt.writerow(list_name)
+        wt.writerow(student)
         f.close()
 
 #basic details of student (master file)
 def student_record():
+        scholar_number_init()
       #  window1.withdraw()
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
         global scholar_number
-        student = []
-        student.append(scholar_number)
+        global mobile_number
         n1 = Label(window,
                    text = "Enter name:",
                    font = "Georgia",
@@ -45,10 +54,7 @@ def student_record():
                      font = "Georgia",
                      bg = "white")
         n1_e.grid(padx = 0, pady = 0, row = 0,column = 1)
-        name_get = name.get()
-        print("name:" + name_get + name.get())
-        student.append(name_get)
-                
+                        
         f1 = Label(window,
                    text = "Enter Father's name:",
                    font = "Georgia",
@@ -60,7 +66,6 @@ def student_record():
                      font = ("Georgia"),
                      bg = "white")
         f1_e.grid(padx = 0, pady = 1,row = 1,column = 1)
-        student.append(father_name.get())
                 
         m1 = Label(window,
                    text = "Enter Mother's name:",
@@ -73,7 +78,6 @@ def student_record():
                      font = ("Georgia"),
                      bg = "white")
         m1_e.grid(padx = 0, pady = 2,row = 2,column = 1)
-        student.append(mother_name.get())
                 
         a1 = Label(window,
                    text = "Enter address:",
@@ -86,24 +90,23 @@ def student_record():
                      font = ("Georgia"),
                      bg = "white")
         a1_e.grid(padx = 0, pady = 3,row = 3,column = 1)
-        student.append(address.get())
                 
         mn = Label(window,
                    text = "Enter Mobile Number:",
                    font = "Georgia",
                    justify = LEFT)
         mn.grid( padx = 0, pady = 4,row = 4,column = 0)
+
         mobile_number = IntVar()
         mn_e = Entry(window,
                      textvariable = mobile_number,
                      font = ("Georgia"),
                      bg = "white")
         mn_e.grid(padx = 0, pady = 4,row = 4,column = 1)
-        student.append(mobile_number.get())
-        print(student)
+        
         sub_btn = Button(window,
                          text = 'Submit', 
-                         command = lambda:append_file(student,"student_record.csv"),
+                         command = lambda:submit_student_record(scholar_number,name,father_name,mother_name,address,mn_e,"student_record.csv"),
                          fg = "Black",
                          background = "white",
                          font = ("Georgia"))
@@ -422,11 +425,12 @@ def main_menu():
                          background = "white",
                          font = ("Georgia"))
         sub_btn.grid(padx = 0,pady = 1,row = 2,column = 0)
+        window1.mainloop()
 
 #def want_to_enter_more():
         
-scholar_number_init()
 print(scholar_number)
+#mobile_number = IntVar()
 main_menu()
         
         
