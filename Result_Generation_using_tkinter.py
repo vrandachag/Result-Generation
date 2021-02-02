@@ -1,5 +1,6 @@
 import csv
 from tkinter import *
+from tkinter import messagebox
 from prettytable import PrettyTable
 
 scholar_number = 0
@@ -15,12 +16,10 @@ def scholar_number_init():
 '''        if(scholar_number == 0):
                 print("File is empty")'''
 
+
 #to append data in file
 def submit_student_record(scholar_no,name,fathers_name,mothers_name,address,mobile_number,file_name):
-        
         mno = mobile_number.get()
-        print("Append to file")
-        print(file_name)
         student = []
         student.append(scholar_no)
         student.append(name.get())
@@ -28,21 +27,26 @@ def submit_student_record(scholar_no,name,fathers_name,mothers_name,address,mobi
         student.append(mothers_name.get())
         student.append(address.get())
         student.append(mno)
-        print(student)
-        f = open(file_name,"a")
+        f = open(file_name,"a", newline='')
         wt = csv.writer(f)
         wt.writerow(student)
+        option = messagebox.askquestion("Student Details","Want to enter more entries?")
+
+        if option.upper() == 'YES':      
+            student_record()
+        else:
+          main_menu()
+
         f.close()
 
 #basic details of student (master file)
 def student_record():
         scholar_number_init()
-      #  window1.withdraw()
         window = Tk()
-        window.title("Student Record")
         window.geometry("1000x600")
+        window.title("Student Record")
+
         global scholar_number
-        global mobile_number
         n1 = Label(window,
                    text = "Enter name:",
                    font = "Georgia",
@@ -106,27 +110,11 @@ def student_record():
         
         sub_btn = Button(window,
                          text = 'Submit', 
-                         command = lambda:submit_student_record(scholar_number,name,father_name,mother_name,address,mn_e,"student_record.csv"),
+                         command = lambda:submit_student_record(scholar_number,n1_e,f1_e,m1_e,a1_e,mn_e,"student_record.csv"),
                          fg = "Black",
                          background = "white",
                          font = ("Georgia"))
         sub_btn.grid(row = 7,column = 0)
-
-        option = Label(window,
-                       text = "Want to enter more entries?",
-                       font = ("Georgia"),
-                       justify = LEFT)
-        option.grid(padx = 0,pady = 5,row = 8,column = 0)
-                
-        yes_btn = Button(window,
-                         text = 'Yes', 
-                         command = student_record)
-        yes_btn.grid(padx = 0,pady = 5,row = 8,column = 1)
-                
-        no_btn = Button(window,
-                        text = 'No',
-                        command = main_menu)
-        no_btn.grid(padx = 0,pady = 5,row = 8,column = 3)
        
 #display student details
 def display_student_record():
@@ -134,11 +122,12 @@ def display_student_record():
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
-        myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
+      #  myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
         with open("student_record.csv",'r') as f:
                 r = csv.reader(f)
-                #for row in r:
-                 #       myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
+                for row in r:
+                  if(row[0].isnum
+                  myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
                 print(myTable)
                 Label(window,
                       text = myTable,
@@ -381,7 +370,7 @@ def Submit(choice):
         choice_1 = choice.get()
         global window1
         window1.withdraw()
-        
+ 
         if choice_1 == 1:
                 student_record()
         elif choice_1 == 2:
@@ -432,5 +421,3 @@ def main_menu():
 print(scholar_number)
 #mobile_number = IntVar()
 main_menu()
-        
-        
