@@ -122,11 +122,10 @@ def display_student_record():
         window = Tk()
         window.title("Student Record")
         window.geometry("1000x600")
-      #  myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
+        myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
         with open("student_record.csv",'r') as f:
                 r = csv.reader(f)
                 for row in r:
-                  if(row[0].isnum
                   myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
                 print(myTable)
                 Label(window,
