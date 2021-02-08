@@ -13,24 +13,23 @@ class Student:
         self.mobile_number = ''
 
     #read complete file and then initialize
-    def scholar_number_init():
+    def scholar_number_init(self):
             self.scholar_number = 0
             with open("student_record.csv","r") as f:
-                    r= csv.reader(f)
+                    r = csv.reader(f)
                     for row in r:
                             self.scholar_number = self.scholar_number + 1
 
     #to append data in file
-    def submit_student_record(scholar_no,name,fathers_name,mothers_name,address,mobile_number,file_name):
-            mno = mobile_number.get()
+    def submit_student_record(self):
             student = []
-            student.append(scholar_no)
-            student.append(name.get())
-            student.append(fathers_name.get())
-            student.append(mothers_name.get())
-            student.append(address.get())
-            student.append(mno)
-            f = open(file_name,"a", newline='')
+            student.append(self.scholar_number)
+            student.append(self.name.get())
+            student.append(self.fathers_name.get())
+            student.append(self.mothers_name.get())
+            student.append(self.address.get())
+            student.append(self.mobile_number.get())
+            f = open("student_record.csv","a", newline='')
             wt = csv.writer(f)
             wt.writerow(student)
             option = messagebox.askquestion("Student Details","Want to enter more entries?")
@@ -38,103 +37,101 @@ class Student:
             if option.upper() == 'YES':      
                 student_record()
             else:
-            main_menu()
+                main_menu()
 
             f.close()
 
     #basic details of student (master file)
-    def student_record():
+    def student_record(self):
             scholar_number_init()
             window = Tk()
             window.geometry("1000x600")
             window.title("Student Record")
 
-            global scholar_number
             n1 = Label(window,
-                    text = "Enter name:",
-                    font = "Georgia",
-                    justify = LEFT)
+                       text = "Enter name:",
+                       font = "Georgia",
+                       justify = LEFT)
             n1.grid(row = 0,column = 0)
-            name = StringVar()
+            self.name = StringVar()
             n1_e = Entry(window,
-                        textvariable = name,
-                        font = "Georgia",
-                        bg = "white")
+                         textvariable = name,
+                         font = "Georgia",
+                         bg = "white")
             n1_e.grid(padx = 0, pady = 0, row = 0,column = 1)
                             
             f1 = Label(window,
-                    text = "Enter Father's name:",
-                    font = "Georgia",
-                    justify = LEFT)
+                       text = "Enter Father's name:",
+                       font = "Georgia",
+                       justify = LEFT)
             f1.grid(padx = 0, pady = 1,row = 1,column = 0)
-            father_name = StringVar()
+            self.father_name = StringVar()
             f1_e = Entry(window,
-                        textvariable = father_name,
-                        font = ("Georgia"),
-                        bg = "white")
+                         textvariable = father_name,
+                         font = ("Georgia"),
+                         bg = "white")
             f1_e.grid(padx = 0, pady = 1,row = 1,column = 1)
                     
             m1 = Label(window,
-                    text = "Enter Mother's name:",
-                    font = "Georgia",
-                    justify = LEFT)
+                       text = "Enter Mother's name:",
+                       font = "Georgia",
+                       justify = LEFT)
             m1.grid(padx = 0, pady = 2,row = 2,column = 0)
-            mother_name = StringVar()
+            self.mother_name = StringVar()
             m1_e = Entry(window,
-                        textvariable = mother_name,
-                        font = ("Georgia"),
-                        bg = "white")
+                         textvariable = mother_name,
+                         font = ("Georgia"),
+                         bg = "white")
             m1_e.grid(padx = 0, pady = 2,row = 2,column = 1)
                     
             a1 = Label(window,
-                    text = "Enter address:",
-                    font = "Georgia",
-                    justify = LEFT)
+                       text = "Enter address:",
+                       font = "Georgia",
+                       justify = LEFT)
             a1.grid( padx = 0, pady = 3,row = 3,column = 0)
-            address = StringVar()
+            self.address = StringVar()
             a1_e = Entry(window,
-                        textvariable = address,
-                        font = ("Georgia"),
-                        bg = "white")
+                         textvariable = address,
+                         font = ("Georgia"),
+                         bg = "white")
             a1_e.grid(padx = 0, pady = 3,row = 3,column = 1)
                     
             mn = Label(window,
-                    text = "Enter Mobile Number:",
-                    font = "Georgia",
-                    justify = LEFT)
+                       text = "Enter Mobile Number:",
+                       font = "Georgia",
+                       justify = LEFT)
             mn.grid( padx = 0, pady = 4,row = 4,column = 0)
 
-            mobile_number = IntVar()
+            self.mobile_number = IntVar()
             mn_e = Entry(window,
-                        textvariable = mobile_number,
-                        font = ("Georgia"),
-                        bg = "white")
+                         textvariable = mobile_number,
+                         font = ("Georgia"),
+                         bg = "white")
             mn_e.grid(padx = 0, pady = 4,row = 4,column = 1)
             
             sub_btn = Button(window,
-                            text = 'Submit', 
-                            command = lambda:submit_student_record(scholar_number,n1_e,f1_e,m1_e,a1_e,mn_e,"student_record.csv"),
-                            fg = "Black",
-                            background = "white",
-                            font = ("Georgia"))
+                             text = 'Submit', 
+                             command = lambda:submit_student_record(),
+                             fg = "Black",
+                             background = "white",
+                             font = ("Georgia"))
             sub_btn.grid(row = 7,column = 0)
         
     #display student details
-    def display_student_record():
-    #        window1.withdraw()
-            window = Tk()
-            window.title("Student Record")
-            window.geometry("1000x600")
-        #  myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
-            with open("student_record.csv",'r') as f:
-                    r = csv.reader(f)
-                    for row in r:
-                    if(row[0].isnum
-                    myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
-                    print(myTable)
-                    Label(window,
-                        text = myTable,
-                        font = "Georgia").grid(row = 0,column = 0)
+    def display_student_record(self):
+        window = Tk()
+        window.title("Student Record")
+        window.geometry("1000x600")
+        myTable = PrettyTable(["Scholar Number","Name","Father's Name","Mother's Name","Address","Mobile Number"])
+        with open("student_record.csv",'r') as f:
+                r = csv.reader(f)
+                for row in r:
+                    if row[0].isnumeric():
+                        myTable.add_row([row[0],row[1],row[2],row[3],row[4],row[5]])
+                print(myTable)
+                Label(window,
+                      text = myTable,
+                      font = "Georgia").grid(row = 0,column = 0)
 
 def submit_subject_details(subject_code,subject_name,file_name):
     subject = []
@@ -428,7 +425,5 @@ def main_menu():
         window1.mainloop()
 
 #def want_to_enter_more():
-        
-print(scholar_number)
 #mobile_number = IntVar()
 main_menu()
