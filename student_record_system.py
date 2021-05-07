@@ -4,8 +4,7 @@ mydb = mysql.connector.connect(
     host = "localhost",
     database = "student_record_system",
     user = "root",
-    password = "Helloworld123"
-#    password = input("Enter password:"),
+    password = input("Enter password:"),
     )
 
 mycursor = mydb.cursor()
